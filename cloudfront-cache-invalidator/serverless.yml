@@ -31,6 +31,7 @@ provider:
          - "cloudfront:CreateInvalidation"
          - "cloudfront:GetInvalidation"
          - "cloudfront:ListInvalidations"
+         - "cloudfront:GetDistribution"
        Resource:
          - "*"
   # overwrite stage with --stage on command line
@@ -67,20 +68,19 @@ provider:
 #    - exclude-me-dir/**
 
 functions:
-  docs-cache-invalidator:
+  cache-invalidator:
+    name: ${self:provider.stage}-cache-invalidator
     handler: cloudfront-cache-invalidator.handler
-  blog-cache-invalidator:
-    handler: cloudfront-cache-invalidator.handler
-  www-cache-invalidator:
-    handler: cloudfront-cache-invalidator.handler
-
-plugins:
-  - serverless-python-requirements
 
 custom:
+  pythonRequirements:
+    dockerizePip: true
   docs:
     distribution_id: E2MMGRK452BTPY
   blog:
     distribution_id: E1B4WMXD6W21EO
   www:
     distribution_id: E3TSARPW7E4V5N
+
+plugins:
+  - serverless-python-requirements
