@@ -1,24 +1,27 @@
 import boto3
 import os
-import string
+import sys
+import json
+import logging
 
 from datetime import datetime
-from pprint import pprint
+from pprint import pprint, pformat
+
+
+logging.basicConfig(format='%(asctime)s %(levelname)-8s %(message)s',
+					datefmt='%Y-%m-%d %H:%M:%S',
+					stream=sys.stdout,
+					level=logging.DEBUG)
+logger = logging.getLogger('cloudfront-cache-invalidator.py')
 
 client = boto3.client('cloudfront')
 
-
-def get_distribution():
-    response = client.get_distribution(
-        Id=os.environ['distribution_id']
-    )
-    return response
 
 def handler(event, context):
     files = ["/*"]
     dt = datetime.utcnow()
     timestamp = ''.join(str(x) for x in (dt.year, dt.month, dt.day, dt.minute, dt.second))
-    #pprint(get_distribution())
+
     response = client.create_invalidation(
         DistributionId=os.environ['distribution_id'],
         InvalidationBatch={
@@ -29,4 +32,5 @@ def handler(event, context):
             'CallerReference': timestamp
         }
     )
-    pprint(response)
+    logger.debug(pformat(response))
+    return json.dumps(response, indent=4, default=str)

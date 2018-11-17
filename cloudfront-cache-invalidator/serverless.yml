@@ -81,6 +81,3 @@ custom:
     distribution_id: E1B4WMXD6W21EO
   www:
     distribution_id: E3TSARPW7E4V5N
-
-plugins:
-  - serverless-python-requirements
