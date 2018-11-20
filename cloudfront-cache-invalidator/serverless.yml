@@ -1,0 +1,81 @@
+
+# Welcome to Serverless!
+#
+# This file is the main config file for your service.
+# It's very minimal at this point and uses default values.
+# You can always add more config options for more control.
+# We've included some commented out config examples here.
+# Just uncomment any of them to get that config option.
+#
+# For full config options, check the docs:
+#    docs.serverless.com
+#
+# Happy Coding!
+
+service: cloudfront-cache-invalidator
+
+# You can pin your service to only deploy with a specific Serverless version
+# Check out our docs for more details
+# frameworkVersion: "=X.X.X"
+
+provider:
+  name: aws
+  runtime: python3.6
+  alias: python
+  timeout: 300
+  environment:
+    distribution_id: ${self:custom.${self:provider.stage}.distribution_id}
+  iamRoleStatements:
+    -  Effect: "Allow"
+       Action:
+         - "cloudfront:CreateInvalidation"
+         - "cloudfront:GetInvalidation"
+         - "cloudfront:ListInvalidations"
+         - "cloudfront:GetDistribution"
+       Resource:
+         - "*"
+  # overwrite stage with --stage on command line
+  stage: ${opt:stage, 'docs'}
+  region: us-east-1
+
+# you can add statements to the Lambda function's IAM Role here
+#  iamRoleStatements:
+#    - Effect: "Allow"
+#      Action:
+#        - "s3:ListBucket"
+#      Resource: { "Fn::Join" : ["", ["arn:aws:s3:::", { "Ref" : "ServerlessDeploymentBucket" } ] ]  }
+#    - Effect: "Allow"
+#      Action:
+#        - "s3:PutObject"
+#      Resource:
+#        Fn::Join:
+#          - ""
+#          - - "arn:aws:s3:::"
+#            - "Ref" : "ServerlessDeploymentBucket"
+#            - "/*"
+
+# you can define service wide environment variables here
+#  environment:
+#    variable1: value1
+
+# you can add packaging information here
+#package:
+#  include:
+#    - include-me.py
+#    - include-me-dir/**
+#  exclude:
+#    - exclude-me.py
+#    - exclude-me-dir/**
+
+functions:
+  cache-invalidator:
+    name: ${self:provider.stage}-cache-invalidator
+    handler: cloudfront-cache-invalidator.handler
+
+custom:
+  docs:
+    distribution_id: E2MMGRK452BTPY
+  blog:
+    distribution_id: E1B4WMXD6W21EO
+  www:
+    distribution_id: E3TSARPW7E4V5N
