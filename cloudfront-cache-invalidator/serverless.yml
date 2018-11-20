@@ -73,8 +73,6 @@ functions:
     handler: cloudfront-cache-invalidator.handler
 
 custom:
-  pythonRequirements:
-    dockerizePip: true
   docs:
     distribution_id: E2MMGRK452BTPY
   blog:
