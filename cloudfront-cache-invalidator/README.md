@@ -50,3 +50,18 @@ Each Lambda function is associated with a respective IAM policy. Example IAM pol
     ]
 }
 ```
+
+# Troubleshooting
+1. AccessDeniedException
+```
+AccessDeniedException: User: arn:aws:iam::1221321312:user/cli is not authorized to perform: lambda:InvokeFunction on resource: arn:aws:lambda:us-east-1:710015040892:function:docs-cache-invalidator
+```
+Why? You do not have the proper permissions to invoke the specific lambda function.
+Solution: File a [Jira](https://docker.atlassian.net/projects/IN) ticket for us and we'll get you access asap.
+
+2. ResourceNotFoundException
+```
+An error occurred (ResourceNotFoundException) when calling the Invoke operation: Function not found: arn:aws:lambda:us-east-1:912514925074:function:docs-cache-invalidator
+```
+Why? You are using an access key ID and secret key from a different AWS account
+Solution: You need to use the access key ID and secret key from the `dockerinc` AWS account (710015040892), check your `~/.aws/credentials` file. If you do not have access to this AWS  account, file a [Jira](https://docker.atlassian.net/projects/IN) ticket for us and we'll get you access asap.
