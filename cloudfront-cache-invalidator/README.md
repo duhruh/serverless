@@ -54,9 +54,9 @@ Each Lambda function is associated with a respective IAM policy. Example IAM pol
 # Troubleshooting
 1. `AccessDeniedException`
 ```
-AccessDeniedException: User: arn:aws:iam::710015040892:user/cli is not authorized to perform: lambda:InvokeFunction on resource: arn:aws:lambda:us-east-1:710015040892:function:docs-cache-invalidator
+AccessDeniedException: User: arn:aws:iam::710015040892:user/mobyuser is not authorized to perform: lambda:InvokeFunction on resource: arn:aws:lambda:us-east-1:710015040892:function:docs-cache-invalidator
 ```
-Why? You do not have the proper permissions to invoke the specific lambda function.
+Why? You do not have the required permissions to invoke the specific lambda function.
 
 Solution: File a [Jira](https://docker.atlassian.net/projects/IN) ticket for us and we'll get you access asap.
 
