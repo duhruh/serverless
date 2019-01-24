@@ -5,7 +5,7 @@ import json
 import logging
 
 from datetime import datetime
-from pprint import pprint, pformat
+from pprint import pformat
 
 
 logging.basicConfig(format='%(asctime)s %(levelname)-8s %(message)s',
