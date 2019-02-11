@@ -1,0 +1,59 @@
+service: infra-cost-bot
+
+provider:
+  name: aws
+  runtime: python3.6
+  timeout: 30
+  region: us-east-1
+  iamRoleStatements:
+    - Effect: "Allow"
+      Action:
+        - "logs.CreateLogGroup"
+        - "logs:CreateLogStream"
+        - "logs:PutLogEvents"
+      Resource: "arn:aws:logs:*:*:*"
+    - Effect: "Allow"
+      Action:
+        - "ce:GetCostAndUsage"
+      Resource: "*"
+    - Effect: "Allow"
+      Action:
+        - "ssm:GetParameter"
+      Resource:
+        - "arn:aws:ssm:us-east-1:398949996071:parameter/infra-cost-bot/slack_token"
+        - "arn:aws:ssm:us-east-1:398949996071:parameter/infra-cost-bot/projects_list_url"
+
+# you can define service wide environment variables here
+#  environment:
+#    variable1: value1
+
+# you can add packaging information here
+#package:
+#  include:
+#    - include-me.py
+#    - include-me-dir/**
+#  exclude:
+#    - exclude-me.py
+#    - exclude-me-dir/**
+
+functions:
+  infra-cost-bot:
+    handler: infra-cost-bot.lambda_handler
+    events:
+      - http: POST infra-cost 
+
+#    Define function environment variables here
+#    environment:
+#      variable2: value2
+
+# you can add CloudFormation resource templates here
+#resources:
+#  Resources:
+#    NewResource:
+#      Type: AWS::S3::Bucket
+#      Properties:
+#        BucketName: my-new-bucket
+#  Outputs:
+#     NewOutput:
+#       Description: "Description for the output"
+#       Value: "Some output value"
