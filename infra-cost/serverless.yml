@@ -5,6 +5,7 @@ provider:
   runtime: python3.6
   timeout: 30
   region: us-east-1
+  stage: prod
   iamRoleStatements:
     - Effect: "Allow"
       Action:
@@ -14,8 +15,8 @@ provider:
       Action:
         - "ssm:GetParameter"
       Resource:
-        - "arn:aws:ssm:us-east-1:398949996071:parameter/infra-cost-bot/slack_token"
-        - "arn:aws:ssm:us-east-1:398949996071:parameter/infra-cost-bot/projects_list_url"
+        - "arn:aws:ssm:us-east-1:398949996071:parameter/infra-cost/slack_token"
+        - "arn:aws:ssm:us-east-1:398949996071:parameter/infra-cost/projects_list_url"
 
 # you can define service wide environment variables here
 #  environment:

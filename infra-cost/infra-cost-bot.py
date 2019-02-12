@@ -30,12 +30,12 @@ import boto3
 import json
 import logging
 import os
-import requests
 
 from base64 import b64decode
-from urlparse import parse_qs
+from urllib.parse import parse_qs
 from datetime import datetime
 from calendar import monthrange
+from botocore.vendored import requests
 
 
 SLACK_TOKEN_KEY = "/infra-cost/slack_token"
@@ -113,7 +113,7 @@ def lambda_handler(event, context):
     # validate project code
     if not validate_project_code(project):
         logger.error("Invalid project code: " + project)
-        return respond(Exception('Invalid project code'))
+        return respond(None, {"text": "Error: Invalid project code"})
     
     # set up start and end dates
     year = datetime.today().year
