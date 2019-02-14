@@ -1,0 +1,10 @@
+{
+    "name": "jenkins-elastic",
+    "version": "1.0.0",
+    "description": "jenkins elastic search index cleanup",
+    "author": "",
+    "dependencies": {
+        "elasticsearch": "^15.4.1"
+    },
+    "devDependencies": {}
+}
